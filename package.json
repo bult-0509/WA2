@@ -1,0 +1,33 @@
+{
+  "name": "wemove-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "concurrently --kill-others --names api,web \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:web": "npm run dev --workspace=@wemove/web",
+    "dev:api": "npm run dev --workspace=@wemove/api",
+    "build": "npm run build --workspace=@wemove/api && npm run build --workspace=@wemove/web",
+    "typecheck": "npm run typecheck --workspaces",
+    "check:runtime": "node scripts/check-runtime.mjs",
+    "db:setup": "npm run build --workspace=@wemove/api && node scripts/database.mjs --seed",
+    "db:migrate": "node scripts/database.mjs",
+    "admin:code": "node scripts/admin-code.mjs",
+    "test:catalog": "node scripts/test-catalog.mjs"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.6",
+    "@types/node": "26.4.1",
+    "@types/pg": "8.23.1",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "concurrently": "10.0.5",
+    "tsc-watch": "7.2.1",
+    "typescript": "5.9.3"
+  }
+}
