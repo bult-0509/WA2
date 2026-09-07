@@ -1,7 +1,7 @@
 import { Body, ConflictException, Controller, Get, NotFoundException, Param, Patch, Post, Query, Req, Res, UseGuards, BadRequestException, ForbiddenException } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { randomUUID } from 'node:crypto';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import sharp, { Metadata } from 'sharp';
 import { z } from 'zod';
@@ -117,7 +117,7 @@ export class CatalogController {
       EXISTS(SELECT 1 FROM products WHERE image_id=m.id AND status IN ('active','archived')) OR
       EXISTS(SELECT 1 FROM sessions s JOIN staff u ON u.id=s.staff_id WHERE s.token_hash=$2 AND s.expires_at>now() AND u.active))`,[id,digest(sessionToken(req))]);
     if(!rows[0]) throw new NotFoundException('Image not found.');
-    res.setHeader('Cache-Control','private, no-store'); res.type('webp');
-    res.sendFile(resolve(uploads,rows[0].file_name));
+    const image=await readFile(resolve(uploads,rows[0].file_name));
+    res.setHeader('Cache-Control','private, no-store'); res.type('webp').send(image);
   }
 }

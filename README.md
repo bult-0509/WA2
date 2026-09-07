@@ -6,7 +6,7 @@ Next.js + NestJS + PostgreSQL 网站重构工程。第一阶段已贯通后台�
 
 ## 直接运行
 
-本机依赖、数据库和开发账号已准备好。双击项目根目录中的 `start.bat` 即可一键启动。也可在命令行手动执行：
+本机依赖、数据库和开发账号已准备好。双击项目根目录中的 `start.bat` 即可一键启动；首次运行若缺少 `.env`，批处理会生成随机本机开发凭据。如果是全新设备，仍需先准备项目本地 PostgreSQL 二进制并执行 `scripts/initialize-postgres.ps1` 与 `npm.cmd run db:setup`。也可在命令行手动执行：
 
 ```powershell
 & .\scripts\local-postgres.ps1 -Action start
@@ -19,7 +19,7 @@ npm.cmd run dev
 
 后台开发账号保存在 .local/dev-admin.json。登录需要邮箱、密码和动态验证码；执行 `npm.cmd run admin:code` 获取当前验证码。同一码成功使用后不可重放，请等待下一周期。
 
-后台 Products 创建草稿，补全真实主图、卖点、安全说明和 SEO 后发布，官网随即展示。Contact 提交后在 Inquiries 查看编号、更新状态和备注；Homepage 修改首页文案；Activity 查看操作记录。当前没有真实商品资料，目录为空，首页文字与装饰图形为待审核的开发占位内容。
+后台 Products 创建草稿，补全主图、卖点、安全说明和 SEO 后发布，官网随即展示。Contact 提交后在 Inquiries 查看编号、更新状态和备注；Homepage 修改首页文案；Activity 查看操作记录。当前包含 24 件演示商品及配套图片，商品清单位于 `data/products.mjs`；执行 `npm.cmd run db:products` 可重复恢复或更新这批商品。
 
 ## 内部资料
 

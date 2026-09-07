@@ -15,8 +15,9 @@
     "build": "npm run build --workspace=@wemove/api && npm run build --workspace=@wemove/web",
     "typecheck": "npm run typecheck --workspaces",
     "check:runtime": "node scripts/check-runtime.mjs",
-    "db:setup": "npm run build --workspace=@wemove/api && node scripts/database.mjs --seed",
+    "db:setup": "npm run build --workspace=@wemove/api && node scripts/database.mjs --seed && node scripts/seed-products.mjs",
     "db:migrate": "node scripts/database.mjs",
+    "db:products": "node scripts/seed-products.mjs",
     "admin:code": "node scripts/admin-code.mjs",
     "test:catalog": "node scripts/test-catalog.mjs"
   },

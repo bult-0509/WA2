@@ -5,22 +5,25 @@ title WEMOVE SPORTS - Development Server
 cd /d "%~dp0"
 if errorlevel 1 goto :directory_error
 
-echo [1/3] Checking the local environment...
+echo [1/4] Checking the local environment...
 where node.exe >nul 2>&1
 if errorlevel 1 goto :node_error
 where npm.cmd >nul 2>&1
 if errorlevel 1 goto :npm_error
 
-if not exist ".env" goto :env_error
+echo [2/4] Preparing the environment file...
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0scripts\ensure-env.ps1"
+if errorlevel 1 goto :env_error
+
 if not exist "node_modules\" (
-    echo [2/3] Installing project dependencies...
+    echo [3/4] Installing project dependencies...
     call npm.cmd ci
     if errorlevel 1 goto :dependency_error
 ) else (
-    echo [2/3] Project dependencies are ready.
+    echo [3/4] Project dependencies are ready.
 )
 
-echo [3/3] Starting the project database...
+echo [4/4] Starting the project database...
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0scripts\local-postgres.ps1" -Action start
 if errorlevel 1 goto :database_error
 
@@ -52,7 +55,7 @@ echo npm was not found. Reinstall Node.js with npm enabled.
 goto :fail
 
 :env_error
-echo The .env file is missing. Copy .env.example to .env and configure it first.
+echo Failed to create or validate the local .env file.
 goto :fail
 
 :dependency_error
