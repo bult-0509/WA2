@@ -4,7 +4,7 @@ Next.js + NestJS + PostgreSQL 网站重构工程。第一阶段已贯通后台�
 
 ## 直接运行
 
-本机依赖、数据库和开发账号已准备好。在项目根目录执行：
+本机依赖、数据库和开发账号已准备好。双击项目根目录中的 `start.bat` 即可一键启动。也可在命令行手动执行：
 
 ```powershell
 & .\scripts\local-postgres.ps1 -Action start

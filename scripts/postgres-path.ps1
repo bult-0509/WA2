@@ -2,11 +2,17 @@ $projectRoot = Split-Path -Parent $PSScriptRoot
 $storagePath = [System.IO.Path]::GetFullPath((Join-Path $projectRoot '.local\postgresql'))
 if ($storagePath -notmatch '[^\x00-\x7F]') { return $storagePath }
 
-# Windows initdb 会将安装路径写入 SQL；中文路径需通过英文目录联接访问。
-# 联接只提供入口，二进制、配置和数据的实际存储仍在项目 .local 下。
+# Windows initdb records its installation path in SQL, so use an ASCII-only junction.
+# The binaries, configuration, and data remain stored under the project's .local directory.
 $aliasParent = Join-Path $env:LOCALAPPDATA 'WemoveRuntimeLinks'
 New-Item -ItemType Directory -Force -Path $aliasParent | Out-Null
-$digest = [Convert]::ToHexString([System.Security.Cryptography.SHA256]::HashData([Text.Encoding]::UTF8.GetBytes($storagePath))).Substring(0,12)
+$sha256 = [System.Security.Cryptography.SHA256]::Create()
+try {
+    $hashBytes = $sha256.ComputeHash([Text.Encoding]::UTF8.GetBytes($storagePath))
+} finally {
+    $sha256.Dispose()
+}
+$digest = ([BitConverter]::ToString($hashBytes) -replace '-', '').Substring(0,12)
 $aliasPath = Join-Path $aliasParent "postgres-$digest"
 if (Test-Path -LiteralPath $aliasPath) {
     $existingAlias = Get-Item -LiteralPath $aliasPath

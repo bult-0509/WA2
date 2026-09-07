@@ -9,7 +9,7 @@ $databaseData = Join-Path $databaseRoot 'data'
 $databaseBin = Join-Path $databaseRoot 'pgsql\bin'
 $pgControl = Join-Path $databaseBin 'pg_ctl.exe'
 
-# 仅管理本工程指定的数据目录，不影响本机其他 PostgreSQL 实例。
+# Only manage this project's data directory; do not affect other PostgreSQL instances.
 if (-not (Test-Path -LiteralPath $pgControl)) {
     throw 'Project-local PostgreSQL binaries are missing; obtain the approved EDB archive first.'
 }
