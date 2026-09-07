@@ -25,6 +25,7 @@ npm.cmd run dev
 - docs/需求追踪.csv：198 个原始需求编号及阶段覆盖范围。
 - docs/运行准备.md：环境、启动、凭据与迁移说明。
 - docs/阶段一验证.md：25 项真实数据库集成测试及浏览器检查。
+- docs/WEMOVE体育用品宣传网站项目验收讲解文档.docx：面向教师的框架、流程与原理讲解稿。
 - design-system/wemove/MASTER.md：UI 基线与当前实现边界。
 
 源码在 apps/web、apps/api，迁移在 database/migrations。验证命令：`npm.cmd run typecheck`、`npm.cmd run build`、`npm.cmd run check:runtime`、`npm.cmd run test:catalog`。生产构建前关闭开发进程，避免同时写入 .next。
