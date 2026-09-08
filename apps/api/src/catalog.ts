@@ -1,3 +1,21 @@
+/**
+ * 模块说明：商品目录与媒体接口
+ *
+ * 所在层：NestJS 业务层
+ * 主要职责：提供公开目录、后台商品维护、发布校验与图片访问
+ * 输入：筛选参数、商品表单、媒体数据和后台身份
+ * 输出：分页目录、商品详情、媒体内容或业务错误
+ *
+ * 执行流程：
+ * 1. 校验所有外部输入。
+ * 2. 在事务中保存商品和默认 SKU。
+ * 3. 依据发布状态控制公开读取。
+ *
+ * 约束：查询值参数化，发布操作还要检查独立权限。
+ * 失败处理：版本冲突、重复值和非法图片转换为明确响应。
+ * 维护提示：新增商品字段时同步 schema、SQL、后台表单和种子。
+ * 验证重点：草稿隔离、并发修改、图片解码和中文路径读取。
+ */
 import { Body, ConflictException, Controller, Get, NotFoundException, Param, Patch, Post, Query, Req, Res, UseGuards, BadRequestException, ForbiddenException } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { randomUUID } from 'node:crypto';

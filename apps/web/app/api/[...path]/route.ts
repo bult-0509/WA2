@@ -1,3 +1,21 @@
+/**
+ * 模块说明：前端同源 API 代理
+ *
+ * 所在层：Next.js 服务端边界
+ * 主要职责：把浏览器同源请求转发到本机 NestJS API
+ * 输入：动态路径、方法、请求头、Cookie 与正文
+ * 输出：保留状态码和必要响应头的代理响应
+ *
+ * 执行流程：
+ * 1. 拼接受控的 API 目标地址。
+ * 2. 转发请求并注入可信来源。
+ * 3. 回传正文及会话 Cookie。
+ *
+ * 约束：路径只能指向固定的本机 API 基址。
+ * 失败处理：上游不可达时返回结构化 503，而非泄露内部异常。
+ * 维护提示：变更 Cookie 或 CSRF 规则时同步检查此代理。
+ * 验证重点：GET 与写请求、Set Cookie、二进制媒体和断连。
+ */
 import type {NextRequest} from 'next/server';
 
 async function proxy(request:NextRequest,context:{params:Promise<{path:string[]}>}){

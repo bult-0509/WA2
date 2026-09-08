@@ -1,4 +1,22 @@
 'use client';
+/**
+ * 模块说明：后台登录页面
+ *
+ * 所在层：Next.js 交互层
+ * 主要职责：收集邮箱、密码和动态验证码并建立后台会话
+ * 输入：登录表单和 API 错误
+ * 输出：已认证会话或可操作的错误提示
+ *
+ * 执行流程：
+ * 1. 提交三项凭据。
+ * 2. 调用同源认证代理。
+ * 3. 成功后跳转后台首页。
+ *
+ * 约束：敏感字段不写入浏览器持久存储。
+ * 失败处理：失败时保留页面并显示服务端通用消息。
+ * 维护提示：认证字段变化必须同步 API 的登录 schema。
+ * 验证重点：错误密码、六位验证码、重复提交和键盘操作。
+ */
 import Link from 'next/link';
 import {useState} from 'react';
 import {LanguageSwitcher,useLocale} from '../../../components/language-provider';

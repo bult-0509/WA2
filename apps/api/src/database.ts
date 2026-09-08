@@ -1,3 +1,21 @@
+/**
+ * 模块说明：数据库连接封装
+ *
+ * 所在层：NestJS 基础设施层
+ * 主要职责：集中管理 PostgreSQL 连接池、事务和健康检查
+ * 输入：参数化 SQL、绑定值和事务回调
+ * 输出：查询结果、事务结果或服务不可用异常
+ *
+ * 执行流程：
+ * 1. 确认连接池已配置。
+ * 2. 为事务获取独占客户端。
+ * 3. 提交或回滚后释放连接。
+ *
+ * 约束：业务模块不得绕过该类自行创建连接池。
+ * 失败处理：连接缺失或 SQL 失败时保留原错误语义。
+ * 维护提示：修改连接参数时评估并发数与本机资源。
+ * 验证重点：提交、回滚、客户端释放和关闭钩子。
+ */
 import { Injectable, OnApplicationShutdown, ServiceUnavailableException } from '@nestjs/common';
 import { Pool, PoolClient, QueryResultRow } from 'pg';
 

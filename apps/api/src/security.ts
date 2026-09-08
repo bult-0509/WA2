@@ -1,3 +1,21 @@
+/**
+ * 模块说明：密码与密钥保护工具
+ *
+ * 所在层：NestJS 安全基础设施层
+ * 主要职责：提供密码散列、恒定时间校验与 TOTP 密钥加密
+ * 输入：用户密码、密文或应用主密钥
+ * 输出：不可逆密码摘要或可认证密文
+ *
+ * 执行流程：
+ * 1. 为密码生成独立盐值。
+ * 2. 用 scrypt 派生固定长度摘要。
+ * 3. 用 AES GCM 加解密 TOTP 密钥。
+ *
+ * 约束：APP_KEY 必须是 32 字节十六进制随机值。
+ * 失败处理：格式异常和认证标签错误直接中止操作。
+ * 维护提示：算法参数变更需要兼容已有数据或设计迁移。
+ * 验证重点：错误密码、损坏密文、缺失密钥和时序比较。
+ */
 import { createHash, scryptSync, timingSafeEqual, randomBytes, createCipheriv, createDecipheriv } from 'node:crypto';
 
 export const digest = (value: string) => createHash('sha256').update(value).digest('hex');

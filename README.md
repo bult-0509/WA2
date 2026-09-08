@@ -23,6 +23,7 @@ npm.cmd run dev
 
 ## 内部资料
 
+- `docs/WEMOVE大模型辅助开发说明.md`：课程验收使用的大模型辅助与提示词微调说明。
 - 项目需求理解.md：开发理解与决策背景，不是课程交付报告。
 - docs/需求追踪.csv：198 个原始需求编号及阶段覆盖范围。
 - docs/运行准备.md：环境、启动、凭据与迁移说明。
@@ -30,4 +31,4 @@ npm.cmd run dev
 - docs/WEMOVE体育用品宣传网站项目验收讲解文档.docx：面向教师的框架、流程与原理讲解稿。
 - design-system/wemove/MASTER.md：UI 基线与当前实现边界。
 
-源码在 apps/web、apps/api，迁移在 database/migrations。验证命令：`npm.cmd run typecheck`、`npm.cmd run build`、`npm.cmd run check:runtime`、`npm.cmd run test:catalog`。生产构建前关闭开发进程，避免同时写入 .next。
+源码在 apps/web、apps/api，迁移在 database/migrations。验证命令：`npm.cmd run check:comments`、`npm.cmd run typecheck`、`npm.cmd run build`、`npm.cmd run check:runtime`、`npm.cmd run test:catalog`。其中注释率按纯注释行除以全部非空源码行计算，当前为 35.13%。生产构建前关闭开发进程，避免同时写入 .next。

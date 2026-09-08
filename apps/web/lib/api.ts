@@ -1,3 +1,21 @@
+/**
+ * 模块说明：前端数据访问封装
+ *
+ * 所在层：Next.js 数据层
+ * 主要职责：集中定义 API 类型、地址和服务端读取行为
+ * 输入：API 路径与请求缓存选项
+ * 输出：类型化数据或可识别的请求错误
+ *
+ * 执行流程：
+ * 1. 拼接固定服务地址。
+ * 2. 执行不缓存请求。
+ * 3. 验证响应状态后解析 JSON。
+ *
+ * 约束：浏览器组件通过同源代理访问，服务端读取本机 API。
+ * 失败处理：非成功状态统一抛错交给页面处理。
+ * 维护提示：API 响应变化必须先更新共享类型。
+ * 验证重点：超时、非 JSON 错误、字段缺失和分页类型。
+ */
 export interface Product {
  id:string;slug:string;name:string;sku:string;summary:string;description:string;category:string;
  age_min:number;age_max:number;environment:string;features:string[];specs:Record<string,string>;

@@ -1,3 +1,21 @@
+/**
+ * 模块说明：商品目录页面
+ *
+ * 所在层：Next.js 展示层
+ * 主要职责：提供搜索、分类、年龄、环境筛选和分页浏览
+ * 输入：URL 查询参数、语言和公开目录 API
+ * 输出：筛选后的商品卡片与分页导航
+ *
+ * 执行流程：
+ * 1. 解析允许的查询参数。
+ * 2. 请求服务端分页目录。
+ * 3. 保留筛选条件生成翻页链接。
+ *
+ * 约束：查询参数要经过 API 再次校验，前端不承担安全判断。
+ * 失败处理：空结果与接口失败分别给出明确界面。
+ * 维护提示：新增筛选项时同步 URL、API schema 与表单。
+ * 验证重点：组合筛选、最后一页、空目录和特殊字符。
+ */
 import Link from 'next/link';
 import {api,ProductList} from '../../lib/api';
 import {Site,ProductCard,Unavailable} from '../../components/site';

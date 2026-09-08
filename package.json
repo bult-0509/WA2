@@ -14,6 +14,7 @@
     "dev:api": "npm run dev --workspace=@wemove/api",
     "build": "npm run build --workspace=@wemove/api && npm run build --workspace=@wemove/web",
     "typecheck": "npm run typecheck --workspaces",
+    "check:comments": "node scripts/check-comment-ratio.mjs",
     "check:runtime": "node scripts/check-runtime.mjs",
     "db:setup": "npm run build --workspace=@wemove/api && node scripts/database.mjs --seed && node scripts/seed-products.mjs",
     "db:migrate": "node scripts/database.mjs",

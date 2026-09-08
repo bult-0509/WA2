@@ -1,3 +1,21 @@
+/**
+ * 模块说明：界面双语词汇工具
+ *
+ * 所在层：Next.js 表示层
+ * 主要职责：为固定界面文字、分类和环境值提供英汉映射
+ * 输入：Locale 与受控英文业务值
+ * 输出：适合当前语言的可见文字
+ *
+ * 执行流程：
+ * 1. 选择英文或中文短语。
+ * 2. 映射分类值。
+ * 3. 映射使用环境和错误消息。
+ *
+ * 约束：业务数据原值保持稳定，翻译只发生在显示层。
+ * 失败处理：未知值原样显示，避免页面空白。
+ * 维护提示：添加枚举值时同时增加翻译和测试场景。
+ * 验证重点：en 与 zh、未知值和 API 错误映射。
+ */
 export type Locale='en'|'zh';
 export function pick(locale:Locale,en:string,zh:string){return locale==='zh'?zh:en;}
 export function displayCategory(locale:Locale,value:string){const zh:Record<string,string>={'Bowling':'保龄球','Balance & coordination':'平衡与协调','Outdoor games':'户外游戏'};return locale==='zh'?(zh[value]||value):value;}

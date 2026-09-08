@@ -1,3 +1,21 @@
+/**
+ * 模块说明：演示商品主数据
+ *
+ * 所在层：数据种子层
+ * 主要职责：集中维护 24 件课程演示商品及其图片说明
+ * 输入：人工审核的商品字段和图片文件名
+ * 输出：供数据库上架脚本读取的对象数组
+ *
+ * 执行流程：
+ * 1. 复用分类安全说明。
+ * 2. 由工厂函数补齐 SEO 与图片路径。
+ * 3. 按三个分类声明商品。
+ *
+ * 约束：SKU、slug 和图片文件名必须全局唯一。
+ * 失败处理：字段缺失会由种子校验或数据库约束中止。
+ * 维护提示：正式上线前替换企业确认的规格和安全资料。
+ * 验证重点：数量 24、唯一性、图片存在和描述完整性。
+ */
 const safety={
   Bowling:'Adult supervision is recommended. Use on a clear, level surface and roll balls underarm only. Keep the lane away from stairs and fragile objects. Inspect all pieces before play and stop using damaged items.',
   'Balance & coordination':'Adult supervision is required. Use on a clear, level, dry surface away from stairs and hard furniture. Adjust the route to the player’s ability and stop using any damaged item.',

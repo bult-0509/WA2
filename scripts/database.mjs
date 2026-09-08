@@ -1,3 +1,21 @@
+/**
+ * 模块说明：迁移与开发账号种子
+ *
+ * 所在层：本地数据库工具层
+ * 主要职责：顺序执行迁移并在需要时创建本机后台账号
+ * 输入：环境连接串、SQL 文件和 --seed 参数
+ * 输出：完成的数据库结构及私有开发凭据文件
+ *
+ * 执行流程：
+ * 1. 获取数据库级迁移锁。
+ * 2. 校验历史迁移校验和并执行新脚本。
+ * 3. 按需生成管理员与 TOTP 密钥。
+ *
+ * 约束：迁移串行且单文件事务化，历史 SQL 不允许变化。
+ * 失败处理：SQL 失败回滚当前迁移并保留诊断。
+ * 维护提示：新增种子字段时保持凭据只写入 .local。
+ * 验证重点：并发启动、校验和变化、半途失败和重复 seed。
+ */
 import { readFile, readdir, mkdir, writeFile, appendFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { randomBytes, randomUUID, createHash } from 'node:crypto';

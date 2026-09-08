@@ -1,3 +1,21 @@
+/**
+ * 模块说明：联系咨询页面
+ *
+ * 所在层：Next.js 展示层
+ * 主要职责：展示项目联系说明并装配可复用咨询表单
+ * 输入：语言上下文和可选商品参数
+ * 输出：通用咨询入口
+ *
+ * 执行流程：
+ * 1. 读取当前语言。
+ * 2. 输出页面介绍。
+ * 3. 挂载 ContactForm。
+ *
+ * 约束：公开页面不得出现后台内部备注。
+ * 失败处理：表单组件负责呈现具体校验失败。
+ * 维护提示：新增咨询类型时同步前后端枚举。
+ * 验证重点：中英文、无商品场景和移动端布局。
+ */
 import {Site} from '../../components/site';
 import {ContactForm} from '../../components/contact-form';
 import {getLocale} from '../../lib/locale';

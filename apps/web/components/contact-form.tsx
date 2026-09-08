@@ -1,4 +1,22 @@
 'use client';
+/**
+ * 模块说明：咨询表单组件
+ *
+ * 所在层：Next.js 客户端交互层
+ * 主要职责：管理联系表单提交、幂等键、字段错误和成功回执
+ * 输入：用户输入、可选商品信息和语言上下文
+ * 输出：咨询编号或可定位的错误摘要
+ *
+ * 执行流程：
+ * 1. 生成并保留一次提交标识。
+ * 2. 发送同源 JSON 请求。
+ * 3. 映射字段错误并移动焦点。
+ *
+ * 约束：重试同一内容复用幂等键，冲突后才更换。
+ * 失败处理：网络或校验失败时保留输入并恢复按钮。
+ * 维护提示：修改字段时同步 aria 描述和后端 schema。
+ * 验证重点：双击提交、409 冲突、键盘焦点与成功状态。
+ */
 import {useRef,useState} from 'react';
 import {useLocale} from './language-provider';
 import {localizeApiMessage,pick} from '../lib/i18n';

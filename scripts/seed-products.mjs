@@ -1,3 +1,21 @@
+/**
+ * 模块说明：演示商品上架
+ *
+ * 所在层：本地数据种子层
+ * 主要职责：把商品清单和 WebP 图片幂等写入 PostgreSQL
+ * 输入：环境连接串、商品数组和资源目录
+ * 输出：24 件 active 商品、默认 SKU、媒体和审计记录
+ *
+ * 执行流程：
+ * 1. 验证数量与唯一标识。
+ * 2. 复制并检查图片元数据。
+ * 3. 在单个事务中更新商品和变体。
+ *
+ * 约束：稳定 UUID 与 upsert 让重复执行保持同一业务记录。
+ * 失败处理：任一商品失败时回滚整批数据库写入。
+ * 维护提示：改变清单数量时同步验证、文档和验收口径。
+ * 验证重点：连续执行、缺图、重复 SKU 和数据库回滚。
+ */
 import {createHash} from 'node:crypto';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';

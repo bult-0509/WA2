@@ -1,3 +1,21 @@
+/**
+ * 模块说明：后台身份认证与授权
+ *
+ * 所在层：NestJS 业务层
+ * 主要职责：完成限流登录、TOTP 校验、会话建立和权限拦截
+ * 输入：登录凭据、Cookie、路由所需权限
+ * 输出：后台身份信息或统一认证错误
+ *
+ * 执行流程：
+ * 1. 解析会话令牌。
+ * 2. 校验会话与权限。
+ * 3. 记录登录审计并管理退出。
+ *
+ * 约束：Cookie 只保存随机令牌，数据库只保存摘要。
+ * 失败处理：认证失败统一返回，避免泄露账号是否存在。
+ * 维护提示：调整会话时长时同步检查 Cookie 和数据库过期时间。
+ * 验证重点：错误密码、验证码重放、过期会话和越权访问。
+ */
 import { Body, CanActivate, Controller, ExecutionContext, ForbiddenException, Get, HttpException, Injectable, Post, Req, Res, SetMetadata, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import type { Request, Response } from 'express';

@@ -1,3 +1,21 @@
+/**
+ * 模块说明：首页内容与咨询处理
+ *
+ * 所在层：NestJS 业务层
+ * 主要职责：维护首页文案并把公开联系表单转成可追踪询盘
+ * 输入：首页版本、联系表单、请求来源和后台身份
+ * 输出：首页内容、咨询编号、询盘列表或审计结果
+ *
+ * 执行流程：
+ * 1. 用 Zod 校验数据。
+ * 2. 在事务中处理幂等写入。
+ * 3. 用版本号保护后台修改。
+ *
+ * 约束：蜜罐字段、频率限制和产品状态共同约束提交。
+ * 失败处理：冲突、失效产品或版本落后时拒绝写入。
+ * 维护提示：更改表单字段时同时更新前端、迁移与哈希输入。
+ * 验证重点：重复提交、并发编辑、隐私同意和状态流转。
+ */
 import { Body, ConflictException, Controller, Get, NotFoundException, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import type { Request } from 'express';
 import { randomUUID } from 'node:crypto';

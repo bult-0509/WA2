@@ -1,3 +1,21 @@
+/**
+ * 模块说明：目录集成测试
+ *
+ * 所在层：工程验证层
+ * 主要职责：以真实数据库和 HTTP 接口验证商品完整生命周期
+ * 输入：已启动的 API、数据库和本机管理员凭据
+ * 输出：断言结果、清理后的测试记录和退出码
+ *
+ * 执行流程：
+ * 1. 登录并获取后台会话。
+ * 2. 创建、发布、查询和归档测试商品。
+ * 3. 验证异常路径后删除测试数据。
+ *
+ * 约束：测试数据使用独立 UUID，结束时必须清理。
+ * 失败处理：断言失败保留错误并执行 finally 清理。
+ * 维护提示：新增发布规则时补充正常和拒绝场景。
+ * 验证重点：权限、CSRF、版本冲突、重复 SKU 与归档读取。
+ */
 import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {resolve} from 'node:path';

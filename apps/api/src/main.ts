@@ -1,3 +1,21 @@
+/**
+ * 模块说明：API 启动与全局边界
+ *
+ * 所在层：NestJS 入口层
+ * 主要职责：装配控制器、健康检查、统一错误格式和请求防护
+ * 输入：环境变量与来自浏览器的 HTTP 请求
+ * 输出：监听中的 API 服务和结构一致的响应
+ *
+ * 执行流程：
+ * 1. 读取根目录环境配置。
+ * 2. 安装请求体、CSRF 和错误中间件。
+ * 3. 启动本机回环地址上的服务。
+ *
+ * 约束：写请求必须同时满足同源和自定义请求头检查。
+ * 失败处理：验证错误与数据库故障映射为稳定状态码。
+ * 维护提示：新增控制器时在 AppModule 注册并保持全局前缀。
+ * 验证重点：健康端点、错误字段、正文上限和关闭钩子。
+ */
 import 'reflect-metadata';
 import { ArgumentsHost, Catch, Controller, ExceptionFilter, Get, HttpException, Module, ServiceUnavailableException } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';

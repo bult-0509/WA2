@@ -1,4 +1,22 @@
 @echo off
+rem =============================================================================
+rem Module: Windows one-click development launcher.
+rem Layer: local developer operations.
+rem Purpose: prepare configuration, dependencies, PostgreSQL, API, and web app.
+rem Input: project directory, Node.js, npm, and project-local database files.
+rem Output: development services available on ports 3100 and 3101.
+rem Flow 1: verify Node.js and npm before changing runtime state.
+rem Flow 2: create or recover .env, then install locked dependencies if needed.
+rem Flow 3: start only this project's database and launch both workspaces.
+rem Security: generated credentials remain in ignored local files.
+rem Portability: PowerShell scripts support Windows PowerShell 5.1.
+rem Failure: each preparation step routes to a specific readable message.
+rem Recovery: the window stays open after failure so the message is visible.
+rem Maintenance: keep step numbers aligned when inserting another prerequisite.
+rem Verification: run check:runtime after the API and web readiness messages.
+rem Scope: this launcher is for local coursework development, not deployment.
+rem Ownership: PostgreSQL commands operate only on the project data directory.
+rem =============================================================================
 setlocal
 title WEMOVE SPORTS - Development Server
 
